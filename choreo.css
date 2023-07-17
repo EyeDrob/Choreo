@@ -1,0 +1,99 @@
+body {
+  margin: 0;
+  background-color: #f2f2f2;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 45px;
+  text-align: center;
+  border-bottom: 2px solid gray;
+  margin: 0;
+  padding: 20px;
+}
+
+h2 {
+  text-align: center;
+}
+
+ol {
+  border-right: 2px solid gray;
+  width: 100px;
+  margin: 0;
+  padding: 20px;
+}
+
+#grid {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+}
+
+#grid ol {
+  padding-left: 40px;
+}
+
+#grid #article {
+  padding-left: 30px;
+}
+
+@media(max-width: 550px) {
+  #grid {
+    display: block;
+  }
+
+  ol {
+    border-right: none;
+  }
+
+  h1 {
+    border-bottom: none;
+  }
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.youtubevideoContainer {
+  width: 640px;
+  height: 480px;
+  border: 3px solid #ccc;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.yourvideoContainer {
+  width: 640px;
+  height: 480px;
+  border: 3px solid #ccc;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+}
+
+.label-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.bothplay {
+  padding-top: 50px;
+}
