@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>WEB2 - Choreography comparison</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="choreo.css">
+</head>
+
+<body>
+  <h1><a href="index.html">아직 데모입니다</a></h1>
+  <div id="grid">
+    <ol>
+      <li><a href="aboutus.html">About us<HTML></a></li>
+      <li><a href="choreo.html">Choreography comparison</a></li>
+      <li><a href="loginsignup.html">login/signup</a></li>
+    </ol>
+    <div id="article">
+      <h2>Choreography comparison</h2>
+      <div class="container">
+        <div class="youtubevideoContainer">
+          <div class="label-container">
+            <label for="youtubeUrlInput">YouTube 영상 URL:</label>
+            <input type="text" id="youtubeUrlInput" placeholder="YouTube 영상 URL">
+            <button onclick="playYouTubeVideo()">재생</button>
+          </div>
+          <div id="youtubeContainer"></div>
+        </div>
+        <div class="yourvideoContainer">
+          <div class="label-container">
+            <label for="yourvideoUrlInput">비교 영상 URL:</label>
+            <input type="text" id="yourvideoUrlInput" placeholder="비교 영상 URL">
+            <button onclick="playYourVideo()">재생</button>
+          </div>
+          <video class="video" controls>
+            <source src="video2.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+      <div class="container">
+        <div class="bothplay">
+        <button onclick="playBothVideos()">둘 다 동시 재생</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    var youtubePlayer;
+    var html5Player;
+
+    function playYouTubeVideo() {
+      var youtubeUrl = document.getElementById("youtubeUrlInput").value;
+      var youtubeContainer = document.getElementById("youtubeContainer");
+
+      // 동영상 ID 추출
+      var videoId = extractVideoIdFromUrl(youtubeUrl);
+      if (videoId) {
+        // 기존 YouTube 동영상 제거
+        youtubeContainer.innerHTML = "";
+
+        // iframe을 생성하여 동영상 재생
+        var iframe = document.createElement("iframe");
+        iframe.src = "https://www.youtube.com/embed/" + videoId + "?autoplay=1&rel=0&mute=1";
+        iframe.width = "640";
+        iframe.height = "480";
+        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+        iframe.allowfullscreen = true;
+
+        // 동영상을 표시할 컨테이너 요소에 추가
+        youtubeContainer.appendChild(iframe);
+
+        // YouTube 플레이어 객체 저장
+        youtubePlayer = iframe;
+      } else {
+        alert("유효한 YouTube 동영상 URL을 입력하세요.");
+      }
+    }
+
+    function playYourVideo() {
+      var yourVideoUrl = document.getElementById("yourvideoUrlInput").value;
+      var yourVideo = document.getElementById("yourVideo");
+
+      yourVideo.src = yourVideoUrl;
+      yourVideo.load();
+      yourVideo.play();
+
+      // HTML5 동영상 플레이어 객체 저장
+      html5Player = yourVideo;
+    }
+
+    function playBothVideos() {
+      if (youtubePlayer && html5Player) {
+        youtubePlayer.contentWindow.postMessage('{"event":"command","func":"' + 'playVideo' + '","args":""}', '*');
+        html5Player.play();
+      }
+    }
+
+    // YouTube 동영상 URL에서 동영상 ID 추출하는 함수
+    function extractVideoIdFromUrl(url) {
+      var match = url.match(/(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/);
+      if (match) {
+        return match[1];
+      } else {
+        return null;
+      }
+    }
+  </script>
+</body>
+
+</html>
